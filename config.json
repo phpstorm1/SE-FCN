@@ -1,0 +1,43 @@
+{
+	"training_data_dir": "/data/datasets/TIMIT/train",
+	"testing_data_dir": "/data/datasets/TIMIT/test",
+	"noise_dir": "/data/datasets/noise/noisex92",
+	"save_testing_results_dir": "./data/results/test_TIMIT",
+
+	"tedlium_wav_path": "/data/datasets/TEDLIUM_release2/train/wav",
+	"test_tedlium_wav_dir": "",
+	"how_many_testing_utter": 1,
+	"stm_path": "/data/datasets/TEDLIUM_release2/train/stm",
+	"wav_length_per_batch": 5,
+	"speech_percentage": 0.8,
+
+	"train_dir": "./tmp/train",
+	"summaries_dir": "./tmp/train_logs",
+
+	"context_window_width": 13,
+	"win_len": 512,
+	"win_shift": 256,
+	"nDFT": 512,
+	"num_frequency_bins": 257,
+	"sampling_rate": 16000,
+
+	"snr_range": [-5, 10],
+	"sensor_noise_path": "",
+	"sensor_snr_range": [15, 25],
+
+	"test_snr": [-5, 0, 5],
+	"test_noise_path": "/data/datasets/16kHz/noise",
+	"test_noise": ["babble", "factory", "street"],
+
+	"batch_size": 1,
+	"Adam_learn_rate": 1e-3,
+	"start_checkpoint": "",
+	"save_checkpoint_steps": 2000,
+	"how_many_training_steps": 20000,
+
+	"recording_dir": "/data/datasets/KWS/mcgill_stb-0.2_06112018/noisy",
+	"save_processed_recordings_dir": "./kws_recordings/stb-0.2",
+	"seg_recording_length": 100,
+	"model_dir": "./tmp/train",
+	"param_file": "model.ckpt-200000"
+}
