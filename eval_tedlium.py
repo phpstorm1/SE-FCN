@@ -63,7 +63,7 @@ def main(_):
     for file_idx, testing_file in enumerate(testing_file_list):
 
         _, clean_wav = input_data.read_wav(testing_file, config['sampling_rate'])
-        stm_path = os.path.join(config['stm_path'], os.path.basename(testing_file).split(".wav")[0] + '.stm')
+        stm_path = os.path.join(config['test_stm_path'], os.path.basename(testing_file).split(".wav")[0] + '.stm')
         utter_pos = input_data.get_utter_pos(stm_path, config['sampling_rate'])
 
         for noise_idx in range(len(config['test_noise'])):
@@ -81,7 +81,7 @@ def main(_):
                                                                                   snr=test_snr[snr_idx],
                                                                                   utter_percentage=config['speech_percentage'])
 
-                    segment = int(math.floor(len(noisy_wav) / (config['wav_length_per_batch'] * config['sampling_rate'])))
+                    segment = int(math.ceil(len(noisy_wav) / (config['wav_length_per_batch'] * config['sampling_rate'])))
 
                     for segment_idx in range(segment):
                         noisy_specs, clean_specs = input_data.get_seg_specs(mix_wav=noisy_wav,
@@ -98,9 +98,9 @@ def main(_):
                                                       feed_dict={input_specs: noisy_specs, target_specs: clean_specs})
 
                         print("processing file: " + testing_file, " " * 5,
-                              "seg:", "{}/{}".format(segment_idx, segment), " " * 5,
+                              "seg:", "{}/{}".format(segment_idx+1, segment), " " * 5,
                               "proc num batch:", input_specs.shape[0], " " * 5,
-                              "seg mse:", format(seg_specs, '.5f'))
+                              "seg mse:", format(seg_mse, '.5f'))
 
                         seg_specs = np.vstack(seg_specs)
                         seg_specs_real = seg_specs[:, :, 0]
@@ -121,7 +121,7 @@ def main(_):
 
                     save_path = os.path.join(config['save_testing_results_dir'],
                                              'test',
-                                             str(config['noise_type'][noise_idx]),
+                                             str(config['test_noise'][noise_idx]),
                                              str(test_snr[snr_idx]))
                     if not os.path.exists(save_path):
                         os.makedirs(save_path)
@@ -130,7 +130,7 @@ def main(_):
 
                     save_path = os.path.join(config['save_testing_results_dir'],
                                              'mix',
-                                             str(config['noise_type'][noise_idx]),
+                                             str(config['test_noise'][noise_idx]),
                                              str(test_snr[snr_idx]))
                     if not os.path.exists(save_path):
                         os.makedirs(save_path)
@@ -139,7 +139,7 @@ def main(_):
 
                     save_path = os.path.join(config['save_testing_results_dir'],
                                              'clean',
-                                             str(config['noise_type'][noise_idx]),
+                                             str(config['test_noise'][noise_idx]),
                                              str(test_snr[snr_idx]))
                     if not os.path.exists(save_path):
                         os.makedirs(save_path)

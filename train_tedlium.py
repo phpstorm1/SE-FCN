@@ -161,7 +161,9 @@ def main(_):
 
         sess.run([increment_global_step], feed_dict={})
         wav_len = len(padded_speech) / config['sampling_rate']
-        print("training step:", global_train_step, " "*10, "mse:", format(training_mse, '.5f'), "wav len: ", format(wav_len, '.2f'))
+        print("training step:", global_train_step, " "*10,
+              "mse:", format(training_mse, '.5f'), " " *10,
+              "wav len: ", format(wav_len, '.2f'))
 
         # Save the model checkpoint periodically.
         if global_train_step % config['save_checkpoint_steps'] == 0 or global_train_step == how_many_training_steps:
@@ -206,7 +208,7 @@ def main(_):
 
                 save_path = os.path.join(config['save_testing_results_dir'],
                                          'test',
-                                         str(config['noise_type'][noise_idx]),
+                                         str(config['test_noise'][noise_idx]),
                                          str(test_snr[snr_idx]))
 
                 if not os.path.exists(save_path):
@@ -217,7 +219,7 @@ def main(_):
 
                 save_path = os.path.join(config['save_testing_results_dir'],
                                          'mix',
-                                         str(config['noise_type'][noise_idx]),
+                                         str(config['test_noise'][noise_idx]),
                                          str(test_snr[snr_idx]))
                 if not os.path.exists(save_path):
                     os.makedirs(save_path)
@@ -227,7 +229,7 @@ def main(_):
 
                 save_path = os.path.join(config['save_testing_results_dir'],
                                          'clean',
-                                         str(config['noise_type'][noise_idx]),
+                                         str(config['test_noise'][noise_idx]),
                                          str(test_snr[snr_idx]))
                 if not os.path.exists(save_path):
                     os.makedirs(save_path)
@@ -237,7 +239,7 @@ def main(_):
 
                 print("Testing file #", file_idx, os.path.basename(testing_file),
                       "SNR :", format(test_snr[snr_idx], '5.1f'), " "*10,
-                      "noise:", format(config['noise_type'][noise_idx], '10.10s'), " "*10,
+                      "noise:", format(config['test_noise'][noise_idx], '10.10s'), " "*10,
                       "mse:", format(test_mse, '.5f'))
 
                 overall_testing_mse[snr_idx][noise_idx] = test_mse / (len(testing_file_list))

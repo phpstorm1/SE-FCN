@@ -1,20 +1,19 @@
-# Fully Convolutional Network for Single-channel Speech Enhancement
+# Fully Convolutional Network for Complex Spectrogram Processing in Single-channel Speech Enhancement
 
-An implementation of paper ''*A Fully Convolutional Neural Network for Complex Spectrogram Processing in Speech Enhancement*''. The code provides a variation on training on [TED-LIUM][https://www.openslr.org/19/] dataset. 
+An implementation of paper ''*A Fully Convolutional Neural Network for Complex Spectrogram Processing in Speech Enhancement*''. The code provides a variation on training with [TED-LIUM](https://www.openslr.org/19/) dataset. 
 
-## Prerequisites
+## Dependency
 
 - Python 3
-- tensorflow 1.15
-- scipy
+- Tensorflow 1.15
+- Scipy
 - python_speech_features
-- librosa
+- Librosa
 
 ## Usage
 
 - Training: for training with TED-LIUM dataset, run *train_tedlium.py*, otherwise run *train.py*
-- Testing: The testing is already a part of the training code. For testing with TED-LIUM dataset, run *eval_tedlium.py*.
-- Testing with existing noisy wav files: run *proc_existing_noisy.py*
+- Testing: The testing part, including generating noisy speech and obtaining estimated clean speech from the model, is already a part of the training code. For testing with existing noisy wav files: run *proc_existing_noisy.py*
 
 ## Related work
 
@@ -37,7 +36,7 @@ An implementation of paper ''*A Fully Convolutional Neural Network for Complex S
   }
   ```
 
-- TED-LIUM
+- TED-LIUM (v2)
 
   ```BibTex
   @inproceedings{rousseau2014enhancing,
@@ -63,10 +62,10 @@ An implementation of paper ''*A Fully Convolutional Neural Network for Complex S
 
 ## Notes
 
-In this implementation, the model is slightly modified from the original paper.
+In this implementation, the model is slightly modified from the one in paper.
 
 ## TODO
 
-- [ ] A more detailed README
-- [ ] move to tensorflow 2
-- [ ] support variant sampling rate
+- [ ] Migrate to Tensorflow 2
+- [ ] A detailed in README
+- [ ] Support variant sampling rate

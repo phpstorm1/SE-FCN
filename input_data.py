@@ -270,7 +270,7 @@ def get_testing_specs(utter_wav,
     return batched_utter_specs, batched_noisy_specs, windowed_utter_specs, windowed_noisy_specs
 
 
-def get_seg_testing_specs(mix_wav, wav_length_per_seg, seg_idx, win_len, win_shift, nDFT, time_steps, fs):
+def get_seg_testing_specs(mix_wav, wav_length_per_seg, seg_idx, win_len, win_shift, nDFT, context_window, fs):
     segment = int(math.ceil(len(mix_wav) / (wav_length_per_seg * fs)))
     seg_num_frames = int(math.ceil((wav_length_per_seg * fs - win_len) / win_shift) + 1)
 
@@ -278,7 +278,7 @@ def get_seg_testing_specs(mix_wav, wav_length_per_seg, seg_idx, win_len, win_shi
     _, _, mix_spectrogram_real, mix_spectrogram_imag = get_spectrum(mix_wav, win_len, win_shift, nDFT)
 
     if seg_idx != segment - 1 and seg_idx != 0:
-        start_idx = seg_idx * seg_num_frames - time_steps + 1
+        start_idx = seg_idx * seg_num_frames - context_window + 1
         end_idx = (seg_idx + 1) * seg_num_frames
         seg_mix_spectrogram_real = mix_spectrogram_real[start_idx:end_idx, :]
         seg_mix_spectrogram_imag = mix_spectrogram_imag[start_idx:end_idx, :]
@@ -287,19 +287,19 @@ def get_seg_testing_specs(mix_wav, wav_length_per_seg, seg_idx, win_len, win_shi
         end_idx = seg_num_frames
         seg_mix_spectrogram_real = mix_spectrogram_real[start_idx:end_idx, :]
         seg_mix_spectrogram_imag = mix_spectrogram_imag[start_idx:end_idx, :]
-        seg_mix_spectrogram_real = np.concatenate((seg_mix_spectrogram_real[:time_steps, :], seg_mix_spectrogram_real), axis=0)
-        seg_mix_spectrogram_imag = np.concatenate((seg_mix_spectrogram_imag[:time_steps, :], seg_mix_spectrogram_imag), axis=0)
+        seg_mix_spectrogram_real = np.concatenate((seg_mix_spectrogram_real[:context_window, :], seg_mix_spectrogram_real), axis=0)
+        seg_mix_spectrogram_imag = np.concatenate((seg_mix_spectrogram_imag[:context_window, :], seg_mix_spectrogram_imag), axis=0)
     else:
-        start_idx = seg_idx * seg_num_frames - time_steps + 1
+        start_idx = seg_idx * seg_num_frames - context_window + 1
         seg_mix_spectrogram_real = mix_spectrogram_real[start_idx:, :]
         seg_mix_spectrogram_imag = mix_spectrogram_imag[start_idx:, :]
 
     number_of_frames = np.shape(seg_mix_spectrogram_real)[0]
-    if number_of_frames <= time_steps:
+    if number_of_frames <= context_window:
         warnings.warn("Skip the last segment as the number of frames is smaller than context window length", Warning)
 
     noisy_specs = np.stack((seg_mix_spectrogram_real, seg_mix_spectrogram_imag), axis=2)
-    noisy_specs = batch_spec(noisy_specs, time_steps)
+    noisy_specs = batch_spec(noisy_specs, context_window)
 
     return noisy_specs
 

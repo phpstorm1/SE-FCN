@@ -5,9 +5,10 @@
 	"save_testing_results_dir": "./data/results/test_TIMIT",
 
 	"tedlium_wav_path": "/data/datasets/TEDLIUM_release2/train/wav",
-	"test_tedlium_wav_dir": "",
+	"test_tedlium_wav_dir": "/data/datasets/TEDLIUM_release2/test/wav",
 	"how_many_testing_utter": 1,
 	"stm_path": "/data/datasets/TEDLIUM_release2/train/stm",
+	"test_stm_path": "/data/datasets/TEDLIUM_release2/test/stm",
 	"wav_length_per_batch": 5,
 	"speech_percentage": 0.8,
 
@@ -32,12 +33,12 @@
 	"batch_size": 1,
 	"Adam_learn_rate": 1e-3,
 	"start_checkpoint": "",
-	"save_checkpoint_steps": 2000,
+	"save_checkpoint_steps": 5000,
 	"how_many_training_steps": 20000,
 
-	"recording_dir": "/data/datasets/KWS/mcgill_stb-0.2_06112018/noisy",
-	"save_processed_recordings_dir": "./kws_recordings/stb-0.2",
+	"recording_dir": "",
+	"save_processed_recordings_dir": "",
 	"seg_recording_length": 100,
-	"model_dir": "./tmp/train",
-	"param_file": "model.ckpt-200000"
+	"model_dir": "",
+	"param_file": ""
 }

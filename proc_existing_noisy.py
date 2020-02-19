@@ -1,6 +1,5 @@
 import os.path
 import sys
-import glob
 import json
 
 from functools import reduce
@@ -62,7 +61,7 @@ def main(_):
             segment = int(math.ceil(len(mix_wav) / (config['seg_recording_length'] * fs)))
             for segment_idx in range(segment):
 
-                input_specs = input_data.get_seg_testing_specs(
+                testing_specs = input_data.get_seg_testing_specs(
                     mix_wav=mix_wav,
                     fs=fs,
                     wav_length_per_seg=config['seg_recording_length'],
@@ -70,12 +69,12 @@ def main(_):
                     win_len=config['win_len'],
                     win_shift=config['win_shift'],
                     nDFT=config['nDFT'],
-                    time_steps=config['time_steps'])
+                    context_window=config['context_window_width'])
 
-                seg_specs = sess.run([model_out], feed_dict={input_specs: input_specs})
+                seg_specs = sess.run([model_out], feed_dict={input_specs: testing_specs})
                 print("processing file: " + filename, " "*5,
-                      "seg:", "{}/{}".format(segment_idx, segment), " "*5,
-                      "proc num batch:", input_specs.shape[0])
+                      "seg:", "{}/{}".format(segment_idx+1, segment), " "*5,
+                      "proc num batch:", testing_specs.shape[0])
 
                 seg_specs = np.vstack(seg_specs)
                 seg_specs_real = seg_specs[:, :, 0]
