@@ -67,5 +67,5 @@ In this implementation, the model is slightly modified from the one in paper.
 ## TODO
 
 - [ ] Migrate to Tensorflow 2
-- [ ] A detailed in README
+- [ ] A detailed README
 - [ ] Support variant sampling rate
