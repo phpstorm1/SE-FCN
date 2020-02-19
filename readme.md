@@ -62,7 +62,8 @@ An implementation of paper ''*A Fully Convolutional Neural Network for Complex S
 
 ## Notes
 
-In this implementation, the model is slightly modified from the one in paper.
+- Remember to modify *config.json* with your own setup.
+- In this implementation, the model is slightly modified from the one in paper.
 
 ## TODO
 
